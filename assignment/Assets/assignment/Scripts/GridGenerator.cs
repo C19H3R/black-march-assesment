@@ -8,6 +8,8 @@ public class GridGenerator : MonoBehaviour
 {
 
 
+
+
     [SerializeField]
     GameObject _tile = null;
     [SerializeField]
@@ -19,6 +21,11 @@ public class GridGenerator : MonoBehaviour
     Text _name_text;
     [SerializeField]
     Text _position_text;
+    [SerializeField]
+    bool _setRandomColor = true;
+    [SerializeField]
+    Color _gridColor = new Color();
+
 
 
 
@@ -35,29 +42,10 @@ public class GridGenerator : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100)&& Input.GetMouseButtonDown(0))
-        {
-            TileInfo currentTileInfo = hit.transform.gameObject.GetComponent<TileInfo>();
-
-            if (currentTileInfo)
-            {
-                Debug.Log(currentTileInfo.tile_color + " " + currentTileInfo.tile_color + " " + currentTileInfo.tile_position);
-                _color_text.text = currentTileInfo.tile_color.ToString();
-                _position_text.text = currentTileInfo.tile_position.ToString();
-                _name_text.text = currentTileInfo.tile_name.ToString();
-
-
-            }
-            Debug.Log("hit");
-        }
+        GetInputForTileInfo();
     }
 
-
-
     #region
-
     void GenerateGridOnStart()
     {
         for (float i = 0; i < _grid_size.x; i++)
@@ -73,11 +61,19 @@ public class GridGenerator : MonoBehaviour
                 Renderer rend = _newTile.GetComponent<Renderer>();
 
                 rend.material = new Material(Shader.Find("Standard"));
-                rend.material.color = new Color(
+                if (_setRandomColor)
+                {
+                    rend.material.color = new Color(
                                         Random.Range(0f, 1f),
                                         Random.Range(0f, 1f),
                                         Random.Range(0f, 1f)
                                 );
+
+                }
+                else
+                {
+                    rend.material.color = _gridColor;
+                }
 
 
                 TileInfo currentTileInfo = _newTile.GetComponent<TileInfo>();
@@ -90,5 +86,21 @@ public class GridGenerator : MonoBehaviour
 
     }
 
+    void GetInputForTileInfo()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100) && Input.GetMouseButtonDown(0))
+        {
+            TileInfo currentTileInfo = hit.transform.gameObject.GetComponent<TileInfo>();
+
+            if (currentTileInfo)
+            {
+                _color_text.text = currentTileInfo.tile_color.ToString();
+                _position_text.text = currentTileInfo.tile_position.ToString();
+                _name_text.text = currentTileInfo.tile_name.ToString();
+            }
+        }
+    }
     #endregion
 }

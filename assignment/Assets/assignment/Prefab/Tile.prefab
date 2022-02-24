@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3486322730617812850}
   m_Layer: 0
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: Grid Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,3 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f3067b794c1ad49b493b080427ef4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile_name: 
+  tile_color: {r: 0, g: 0, b: 0, a: 0}
+  tile_position: {x: 0, y: 0, z: 0}

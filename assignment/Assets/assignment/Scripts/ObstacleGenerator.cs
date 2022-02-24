@@ -13,21 +13,20 @@ public class ObstacleGenerator : MonoBehaviour
     
     void Start()
     {
-        for (int i = 0;  i < _obstaclePosData.obstaclePos.Length;  i++)
+        ReadDataFromScriptableObjects();
+    }
+
+    void ReadDataFromScriptableObjects()
+    {
+        for (int i = 0; i < _obstaclePosData.obstaclePos.Length; i++)
         {
 
             int x = i / 10;
-            int z = i%10;
+            int z = i % 10;
             if (_obstaclePosData.obstaclePos[i])
             {
-                GameObject newObstacle = Instantiate(_sphereObject, new Vector3(x, 1, z), Quaternion.identity, transform);
+                GameObject newObstacle = Instantiate(_sphereObject, new Vector3(x, -0.25f, z), Quaternion.identity, transform);
             }
         }
-    }
-
-
-    void Update()
-    {
-        
     }
 }
